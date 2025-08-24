@@ -18,7 +18,7 @@ RUN cd client && npm install --legacy-peer-deps
 COPY . .
 
 # Build the application
-RUN cd client && npm run build
+RUN cd client && npm run build --legacy-peer-deps
 RUN cd server && npm run build
 
 # Expose port
