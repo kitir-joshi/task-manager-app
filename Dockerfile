@@ -9,7 +9,7 @@ COPY package*.json ./
 COPY server/package*.json ./server/
 COPY client/package*.json ./client/
 
-# Install dependencies with better error handling
+# Install dependencies
 RUN npm install --legacy-peer-deps --no-audit
 RUN cd server && npm install --legacy-peer-deps --no-audit
 RUN cd client && npm install --legacy-peer-deps --no-audit
@@ -17,8 +17,8 @@ RUN cd client && npm install --legacy-peer-deps --no-audit
 # Copy source code
 COPY . .
 
-# Build the application with better error handling
-RUN cd client && CI=false npm run build
+# Build the application
+RUN cd client && npm run build
 RUN cd server && npm run build
 
 # Expose port
