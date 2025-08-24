@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
+import path from 'path';
 
 import connectDB from './config/database';
 import authRoutes from './routes/auth';
@@ -51,6 +52,14 @@ app.use('/api/users', authenticateToken, userRoutes);
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
+// Handle React routing, return all requests to React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
 });
 
 // Socket.IO connection handling
